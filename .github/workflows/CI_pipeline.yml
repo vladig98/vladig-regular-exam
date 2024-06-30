@@ -47,3 +47,14 @@ jobs:
       run: npm start &
     - name: Run UI Tests
       run: npm run test:ui
+
+  deploy:
+    needs: uiTest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Render
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{ secrets.SERVICE_ID }}
+          api-key: ${{ secrets.MY_RENDER_API_KEY }}
+          wait-for-success: true
